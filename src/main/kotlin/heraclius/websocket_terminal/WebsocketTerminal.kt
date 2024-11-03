@@ -16,9 +16,9 @@ class WebsocketTerminal(val wsSession: WebSocketSession) : TerminalAdapter {
         }
     }
 
-    override suspend fun write(str: String) {
+    override suspend fun write(str: Any) {
         try {
-            wsSession.send(Frame.Text(str))
+            wsSession.send(Frame.Text(str.toString()))
         } catch (e: ClosedSendChannelException) {
             instCache.remove(wsSession)
             throw e
